@@ -3,7 +3,7 @@ function makeUsersService() {
 
   // Login
   async function loginUser(credentials) {
-    return await fetch('/api/users', {
+    return await fetch('/api/users/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
