@@ -22,7 +22,7 @@ defineProps({
     </div>
 
     <div v-else>
-      <p>No items available in the menu.</p>
+      <p>No items available in the menu</p>
     </div>
   </div>
 </template>
