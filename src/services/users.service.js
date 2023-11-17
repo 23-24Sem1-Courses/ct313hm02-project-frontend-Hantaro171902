@@ -1,7 +1,9 @@
 function makeUsersService() {
+  // ... other functions ...
+
   // Login
   async function loginUser(credentials) {
-    return await fetch('/api/login', {
+    return await fetch('/api/users', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -15,4 +17,4 @@ function makeUsersService() {
   };
 }
 
-export default makeUsersService();
+export default makeUsersService;

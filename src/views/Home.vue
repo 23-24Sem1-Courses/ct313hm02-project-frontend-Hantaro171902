@@ -138,5 +138,5 @@ import Navbar from '@/components/Navbar.vue';
 
 <style scoped>
 /* Import external styles */
-@import 'src/components/css/home.css';
+@import '@/components/css/home.css';
 </style>
