@@ -1,20 +1,20 @@
 <template>
   <div>
-    <Login @login="handleLogin" />
+    <Signin @signin="handleSignin" />
   </div>
 </template>
 
 <script>
-import Login from '@/components/Login.vue';
+import Signin from '@/components/Signin.vue';
 
 export default {
   components: {
-    Login
+    Signin
   },
   methods: {
-    handleLogin(credentials) {
+    handleSignin(credentials) {
       // Call a method to send the login credentials to the backend
-      this.$emit('login', credentials);
+      this.$emit('signin', credentials);
     }
   }
 };

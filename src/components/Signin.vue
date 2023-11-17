@@ -1,14 +1,45 @@
+<!-- eslint-disable no-unused-vars -->
+<script setup>
+import { ref } from 'vue';
+import * as yup from 'yup';
+import { Form, Field } from 'vee-validate';
+const props = defineProps({
+  initialContact: { type: Object, required: true }
+});
+const $emit = defineEmits(['submit:contact', 'delete:contact']);
+
+const showSuccessMessage = ref(false);
+
+const contactFormSchema = yup.object().shape({
+  u_name: yup.string().required('Username is required.'),
+  u_password: yup.string().required('Password is required.'),
+  first_name: yup.string(),
+  last_name: yup.string(),
+  u_address: yup.string(),
+  u_telephone: yup.string(),
+  u_email: yup.string().email('Invalid email format.')
+});
+
+const editedContact = ref({ ...props.initialContact });
+function signin() {
+  $emit('submit:contact', editedContact.value);
+}
+// function deleteContact() {
+//   $emit('delete:contact', editedContact.value.id);
+// }
+</script>
+
 <template>
   <div class="container d-flex justify-content-center align-items-center min-vh-100">
     <!----------------------- Login Container -------------------------->
-    <div class="row border rounded-5 p-3 bg-white shadow box-area">
+    <div class="row border rounded-5 p-3 shadow box-area">
       <!--------------------------- Left Box ----------------------------->
       <div
         class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
-        style="background: #b22830"
+        style="background: white"
       >
         <div class="featured-image mb-3">
-          <img src="@/assets/picture/White_logo800.png" class="img-fluid" />
+          <img src="@/assets/picture/Highland_Newlogo.png" class="img-fluid" />
         </div>
         <p
           class="text-white fs-2"
@@ -34,21 +65,61 @@
             <h2>Hello,Again</h2>
             <p>We are happy to have you back.</p>
           </div>
-          <form @submit.prevent="login">
+          <Form @submit="signin" :validation-schema="contactFormSchema">
             <div class="input-group mb-3">
-              <input
+              <Field
                 type="text"
                 class="form-control form-control-lg bg-light fs-6"
                 placeholder="User name"
-                v-model="username"
+                v-model="editedContact.username"
               />
             </div>
             <div class="input-group mb-1">
-              <input
+              <Field
                 type="password"
                 class="form-control form-control-lg bg-light fs-6"
                 placeholder="Password"
-                v-model="password"
+                v-model="editedContact.password"
+              />
+            </div>
+            <div class="input-group mb-3">
+              <Field
+                type="text"
+                class="form-control form-control-lg bg-light fs-6"
+                placeholder="First name"
+                v-model="editedContact.firstname"
+              />
+            </div>
+            <div class="input-group mb-3">
+              <Field
+                type="text"
+                class="form-control form-control-lg bg-light fs-6"
+                placeholder="Last name"
+                v-model="editedContact.lastname"
+              />
+            </div>
+            <div class="input-group mb-3">
+              <Field
+                type="text"
+                class="form-control form-control-lg bg-light fs-6"
+                placeholder="Adddress"
+                v-model="editedContact.address"
+              />
+            </div>
+            <div class="input-group mb-3">
+              <Field
+                type="text"
+                class="form-control form-control-lg bg-light fs-6"
+                placeholder="Phone numbers"
+                v-model="editedContact.telephone"
+              />
+            </div>
+            <div class="input-group mb-3">
+              <Field
+                type="text"
+                class="form-control form-control-lg bg-light fs-6"
+                placeholder="Email"
+                v-model="editedContact.email"
               />
             </div>
             <div class="input-group mb-5 d-flex justify-content-between">
@@ -58,12 +129,9 @@
                   ><small>Remember Me</small></label
                 >
               </div>
-              <div class="forgot">
-                <small><a href="#">Forgot Password?</a></small>
-              </div>
             </div>
             <div class="input-group mb-3">
-              <button type="submit" class="btn btn-lg btn-primary w-100 fs-6">Login</button>
+              <button type="submit" class="btn btn-lg btn-primary w-100 fs-6">Sign In</button>
             </div>
             <div class="input-group mb-3">
               <button class="btn btn-lg btn-light w-100 fs-6">
@@ -72,10 +140,7 @@
                 >
               </button>
             </div>
-            <div class="row">
-              <small>Don't have account? <a href="#">Sign Up</a></small>
-            </div>
-          </form>
+          </Form>
         </div>
       </div>
     </div>
@@ -87,14 +152,24 @@ export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
+      firstname: '',
+      lastname: '',
+      address: '',
+      telephone: '',
+      email: ''
     };
   },
   methods: {
-    async login() {
+    async signgin() {
       const credentials = {
         u_name: this.username,
-        u_password: this.password
+        u_password: this.password,
+        first_name: this.firstname,
+        last_name: this.lastname,
+        u_address: this.address,
+        u_telephone: this.telephone,
+        u_email: this.email
       };
 
       try {
@@ -116,14 +191,19 @@ export default {
             // For now, I'll reset the form and hide the success message
             this.username = '';
             this.password = '';
+            this.firstname = '';
+            this.lastname = '';
+            this.address = '';
+            this.telephone = '';
+            this.email = '';
             this.showSuccessMessage = false;
           }, 1000);
         } else {
           // Handle login error
-          console.error('Login failed', response.message);
+          console.error('Sign in failed', response.message);
         }
       } catch (error) {
-        console.error('Error during login:', error);
+        console.error('Error during sign gin:', error);
       }
     }
   }
@@ -133,15 +213,11 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 
-body {
-  font-family: 'Poppins', sans-serif;
-  background: #ececec;
-}
-
 /*------------ Login container ------------*/
 
 .box-area {
   width: 930px;
+  background-color: #b22830;
 }
 
 /*------------ Right box ------------*/

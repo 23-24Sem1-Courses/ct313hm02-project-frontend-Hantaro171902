@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Anton&display=swap');
+
+.box_mid_1 {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    float: left;
+    ;
+}
+
+.title {
+    margin-bottom: 20px;
+}
+
+.title h2 {
+    text-align: center;
+    font-weight: bold;
+    font-family: Agbalumo;
+    font-size: 40px;
+    font-weight: bold;
+    color: #53382c;
+}
+
+.about_banner_1 img {
+    width: 800px;
+    float: right;
+}
+
+.mid-content {
+    padding: 20px;
+}
+
+.the-content.desc {
+    text-align: justify;
+    color: #53382c;
+}
+
+.the-content.desc h3 {
+    font-size: 20px;
+    color: #4f2c1c;
+    font-weight: bold;
+}
+
+.the-content.desc p {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.the-content.desc p:first-child {
+    font-size: 18px;
+}
+
+.about_2 {
+    padding-top: 450px;
+}
+
+.box_mid_2 {
+    width: 100%;
+    max-width: 780px;
+    margin: 0 auto;
+    float: right;
+    ;
+}
+
+.about_banner_2 img {
+    width: 800px;
+    float: left;
+}
