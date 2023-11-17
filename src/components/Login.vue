@@ -67,9 +67,7 @@
             </div>
             <div class="input-group mb-3">
               <button class="btn btn-lg btn-light w-100 fs-6">
-                <img src="images/google.png" style="width: 20px" class="me-2" /><small
-                  >Sign In with Google</small
-                >
+                <i class="fa-brands fa-google mx-3"></i><small> Sign In with Google</small>
               </button>
             </div>
             <div class="row">

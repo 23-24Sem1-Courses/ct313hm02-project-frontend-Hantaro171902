@@ -1,19 +1,28 @@
 function makeUsersService() {
   // ... other functions ...
-
+  const headers = {
+    'Content-Type': 'application/json'
+  };
   // Login
   async function loginUser(credentials) {
     return await fetch('/api/users/login', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers,
       body: JSON.stringify(credentials)
     }).then((res) => res.json());
   }
 
+  async function signinUser(user) {
+    return await fetch('/api/users', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(user)
+    }).then((res) => res.json());
+  }
+
   return {
-    loginUser
+    loginUser,
+    signinUser
   };
 }
 

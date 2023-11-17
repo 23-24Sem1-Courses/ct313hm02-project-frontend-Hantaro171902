@@ -1,12 +1,14 @@
 <!-- eslint-disable no-unused-vars -->
 <script setup>
-import { ref } from 'vue';
+import { ref, defineProps, defineEmits } from 'vue';
 import * as yup from 'yup';
-import { Form, Field } from 'vee-validate';
+import { Form, Field, ErrorMessage } from 'vee-validate';
+
 const props = defineProps({
   initialContact: { type: Object, required: true }
 });
-const $emit = defineEmits(['submit:contact', 'delete:contact']);
+
+const $emit = defineEmits(['submit:user']);
 
 const showSuccessMessage = ref(false);
 
@@ -22,7 +24,7 @@ const contactFormSchema = yup.object().shape({
 
 const editedContact = ref({ ...props.initialContact });
 function signin() {
-  $emit('submit:contact', editedContact.value);
+  $emit('submit:user', editedContact.value);
 }
 // function deleteContact() {
 //   $emit('delete:contact', editedContact.value.id);
@@ -61,61 +63,70 @@ function signin() {
             <!-- Show success message -->
             <p>Login successful! Redirecting...</p>
           </div>
-          <div v-else class="header-text mb-4">
-            <h2>Hello,Again</h2>
-            <p>We are happy to have you back.</p>
-          </div>
           <Form @submit="signin" :validation-schema="contactFormSchema">
             <div class="input-group mb-3">
               <Field
+                name="u_name"
                 type="text"
                 class="form-control form-control-lg bg-light fs-6"
                 placeholder="User name"
                 v-model="editedContact.username"
               />
+              <ErrorMessage name="username" class="error-feedback" />
             </div>
-            <div class="input-group mb-1">
+            <div class="input-group mb-3">
               <Field
+                name="u_password"
                 type="password"
                 class="form-control form-control-lg bg-light fs-6"
                 placeholder="Password"
                 v-model="editedContact.password"
               />
+              <ErrorMessage name="password" class="error-feedback" />
             </div>
             <div class="input-group mb-3">
               <Field
+                name="first_name"
                 type="text"
                 class="form-control form-control-lg bg-light fs-6"
                 placeholder="First name"
                 v-model="editedContact.firstname"
               />
+              <ErrorMessage name="first name" class="error-feedback" />
             </div>
             <div class="input-group mb-3">
               <Field
+                name="last_name"
                 type="text"
                 class="form-control form-control-lg bg-light fs-6"
                 placeholder="Last name"
                 v-model="editedContact.lastname"
               />
+              <ErrorMessage name="last name" class="error-feedback" />
             </div>
             <div class="input-group mb-3">
               <Field
+                name="u_address"
                 type="text"
                 class="form-control form-control-lg bg-light fs-6"
                 placeholder="Adddress"
                 v-model="editedContact.address"
               />
+              <ErrorMessage name="address" class="error-feedback" />
             </div>
             <div class="input-group mb-3">
               <Field
+                name="u_telephone"
                 type="text"
                 class="form-control form-control-lg bg-light fs-6"
                 placeholder="Phone numbers"
                 v-model="editedContact.telephone"
               />
+              <ErrorMessage name="telephone" class="error-feedback" />
             </div>
             <div class="input-group mb-3">
               <Field
+                name="u_email"
                 type="text"
                 class="form-control form-control-lg bg-light fs-6"
                 placeholder="Email"
@@ -176,9 +187,9 @@ export default {
         const response = await this.$usersService.loginUser(credentials);
         console.log('Response from server:', response);
 
-        if (response.message === 'Login successful') {
+        if (response.message === 'Sign up successful') {
           // Handle successful login
-          console.log('Login successful!', response.user);
+          console.log('Sign up successful!', response.user);
 
           // Set showSuccessMessage to true
           this.showSuccessMessage = true;
@@ -203,7 +214,7 @@ export default {
           console.error('Sign in failed', response.message);
         }
       } catch (error) {
-        console.error('Error during sign gin:', error);
+        console.error('Error during sign in:', error);
       }
     }
   }

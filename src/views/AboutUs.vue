@@ -4,7 +4,7 @@ import Navbar from '@/components/Navbar.vue';
 
 <template>
   <Navbar />
-
+  <!-- 
   <div class="about_1">
     <div class="about_banner_1">
       <img src="@/assets/picture/ABOUT-CAREER_1.jpg" alt="" />
@@ -61,7 +61,9 @@ import Navbar from '@/components/Navbar.vue';
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
+
+  <!-- About Us Banner -->
 
   <div id="vnt-content">
     <div class="about bg1">

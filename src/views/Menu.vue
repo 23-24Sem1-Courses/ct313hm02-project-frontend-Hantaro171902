@@ -1,9 +1,9 @@
-<script setup> defineProps({
-  cf_drinks: { type: Array, default: () => [] }, 
-	selectedIndex: { type: Number, default: -1 },
+<script setup>
+defineProps({
+  cf_drinks: { type: Array, default: () => [] },
+  selectedIndex: { type: Number, default: -1 }
 });
-const $emit = defineEmits(['update:selectedIndex']);
-
+// const $emit = defineEmits(['update:selectedIndex']);
 </script>
 <template>
   <div>
@@ -15,9 +15,9 @@ const $emit = defineEmits(['update:selectedIndex']);
           v-for="(drink, index) in cf_drinks"
           :class="{ active: index === selectedIndex }"
           :key="drink.dr_id"
-		    >
-			  {{ contact.name }}
-		    </li>
+        >
+          {{ contact.name }}
+        </li>
       </ul>
     </div>
 
