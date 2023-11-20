@@ -1,10 +1,11 @@
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue';
-import { useRouter } from 'vue-router';
-// import Menu from '@/components/Menu.vue';
-// import Pagination from '@/components/Pagination.vue';
+import { ref, computed, onMounted, watch, watchEffect } from 'vue';
+// import { useRouter } from 'vue-router';
+import DrinkList from '@/components/Menu.vue';
+import drinksService from '@/services/drinks.service';
+import Pagination from '@/components/Pagination.vue';
 
-const $router = useRouter();
+// const $router = useRouter();
 const totalPages = ref(1);
 const currentPage = ref(1);
 const drinks = ref([]);
@@ -25,10 +26,10 @@ const filteredDrinks = computed(() => {
   );
 });
 
-const selectedDrink = computed(() => {
-  if (selectedIndex.value < 0) return null;
-  return filteredDrinks.value[selectedIndex.value];
-});
+// const selectedDrink = computed(() => {
+//   if (selectedIndex.value < 0) return null;
+//   return filteredDrinks.value[selectedIndex.value];
+// });
 
 async function retrieveDrinks(page) {
   try {
@@ -43,6 +44,24 @@ async function retrieveDrinks(page) {
   }
 }
 
+// async function onDeleteDrinks() {
+//     if (confirm('Bạn muốn xóa tất cả Liên hệ?')) {
+//         try {
+//             await drinksService.deleteAllContacts();
+//                 totalPages.value = 1;
+//                 currentPage.value = 1;
+//                 drinks.value = [];
+//                 selectedIndex.value = -1;
+//         } catch (error) {
+//             console.log(error);
+//         }
+//     }
+// }
+
+// function goToAddDrink() {
+//     $router.push({ name: 'drink.add' });
+// }
+
 onMounted(() => retrieveDrinks(1));
 
 watch(searchText, () => (selectedIndex.value = -1));
@@ -50,18 +69,46 @@ watch(searchText, () => (selectedIndex.value = -1));
 watchEffect(() => retrieveDrinks(currentPage.value));
 </script>
 
-<script>
-export default {
-  data() {
-    return {
-      menuItems: [
-        { name: 'Item 1', price: '$10.99' },
-        { name: 'Item 2', price: '$8.99' }
-        // Add more menu items as needed
-      ]
-    };
-  }
-};
-</script>
+<template>
+  <div class="page row mb-5">
+        <div class="mt-3 col-md-6">
+            <div class="my-3">
+                <InputSearch v-model="searchText" />
+            </div>
+            <DrinkList
+                v-if="filteredDrinks.length > 0"
+                :drinks="filteredDrinks"
+                v-model:selectedIndex="selectedIndex"
+            />
+            <p v-else>
+                Không có liên hệ nào.
+            </p>
+            <div class="mt-3 d-flex justify-content-center align-items-center">
+                <Pagination
+                    :totalPages="totalPages"
+                    v-model:currentPage="currentPage"
+                />
+            </div>
+            <!-- <div class="mt-3 col-md-6">
+                <div v-if="selectedDrink">
+                            <h4>
+                                Chi tiết Liên hệ
+                                <i class="fas fa-address-card"></i>
+                            </h4>
+                            <ContactCard :contact="selectedDrink" />
+                            <router-link
+                                :to="{
+                                    name: 'contact.edit',
+                                    params: { id: selectedDrink.id },
+                                }"
+                            >
+                                <span class="mt-2 badge badge-warning">
+                                <i class="fas fa-edit"></i> Hiệu chỉnh</span>
+                            </router-link>
+                        </div>
+                    </div> -->
+            </div>
+          </div>
+</template>
 
 <style scoped></style>
