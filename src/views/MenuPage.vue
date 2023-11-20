@@ -1,7 +1,7 @@
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, onMounted, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
-// import Menu from '@/components/Menu.vue';
+import Menu from '@/components/Menu.vue';
 // import Pagination from '@/components/Pagination.vue';
 
 const $router = useRouter();

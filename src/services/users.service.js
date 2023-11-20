@@ -13,7 +13,7 @@ function makeUsersService() {
   }
 
   async function signinUser(user) {
-    return await fetch('/api/users', {
+    return await fetch('/api/users/', {
       method: 'POST',
       headers,
       body: JSON.stringify(user)

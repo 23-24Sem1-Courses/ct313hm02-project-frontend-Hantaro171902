@@ -13,13 +13,19 @@ const $emit = defineEmits(['submit:user']);
 const showSuccessMessage = ref(false);
 
 const contactFormSchema = yup.object().shape({
-  u_name: yup.string().required('Username is required.'),
+  u_name: yup
+    .string()
+    .required('Username is required.')
+    .min(2, 'Atleast 2 characters.')
+    .max(50, 'Maximun is 50 characters.'),
   u_password: yup.string().required('Password is required.'),
   first_name: yup.string(),
   last_name: yup.string(),
   u_address: yup.string(),
-  u_telephone: yup.string(),
-  u_email: yup.string().email('Invalid email format.')
+  u_telephone: yup
+    .string()
+    .matches(/(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/g, 'Phone numbers is not valid.'),
+  u_email: yup.string().email('Invalid email format.').max(50, 'Email maximum 50 characters.')
 });
 
 const editedContact = ref({ ...props.initialContact });
@@ -62,6 +68,10 @@ function signin() {
           <div v-if="showSuccessMessage" class="success-message mb-4">
             <!-- Show success message -->
             <p>Login successful! Redirecting...</p>
+          </div>
+          <div v-else class="header-text mb-4 text-white">
+            <h2>Sign Up</h2>
+            <p>We are happy to have you back.</p>
           </div>
           <Form @submit="signin" :validation-schema="contactFormSchema">
             <div class="input-group mb-3">
@@ -137,7 +147,7 @@ function signin() {
               <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="formCheck" />
                 <label for="formCheck" class="form-check-label text-secondary"
-                  ><small>Remember Me</small></label
+                  ><small class="text-white">Remember Me</small></label
                 >
               </div>
             </div>
@@ -146,9 +156,7 @@ function signin() {
             </div>
             <div class="input-group mb-3">
               <button class="btn btn-lg btn-light w-100 fs-6">
-                <img src="images/google.png" style="width: 20px" class="me-2" /><small
-                  >Sign In with Google</small
-                >
+                <i class="fa-brands fa-google mx-3"></i><small> Sign In with Google</small>
               </button>
             </div>
           </Form>
@@ -184,7 +192,7 @@ export default {
       };
 
       try {
-        const response = await this.$usersService.loginUser(credentials);
+        const response = await this.$usersService.signinUser(credentials);
         console.log('Response from server:', response);
 
         if (response.message === 'Sign up successful') {
@@ -197,7 +205,7 @@ export default {
           // Simulate a redirect after a short delay (e.g., 2 seconds)
           setTimeout(() => {
             // You can use router.push to navigate to another page
-            this.$router.push('/');
+            this.$router.push('/login');
 
             // For now, I'll reset the form and hide the success message
             this.username = '';

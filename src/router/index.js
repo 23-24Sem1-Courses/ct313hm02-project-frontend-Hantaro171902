@@ -2,7 +2,7 @@ import { createWebHistory, createRouter } from 'vue-router';
 import Home from '@/views/Home.vue';
 import Login from '@/views/LoginPage.vue';
 import Signin from '@/views/SigninPage.vue';
-import Menu from '@/views/Menu.vue';
+import Menu from '@/views/MenuPage.vue';
 import AboutUs from '@/views/AboutUs.vue';
 // import Cart from '../views/Cart.vue';
 const routes = [

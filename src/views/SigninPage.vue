@@ -1,3 +1,10 @@
+<template>
+  <div class="page">
+    <Signin :initial-user="user" @submit:user="onAdd" />
+    <p>{{ message }}</p>
+  </div>
+</template>
+
 <script setup>
 import { ref } from 'vue';
 
@@ -17,9 +24,3 @@ async function onAdd(user) {
   }
 }
 </script>
-<template>
-  <div class="page">
-    <Signin :initial-user="user" @submit:user="onAdd" />
-    <p>{{ message }}</p>
-  </div>
-</template>
