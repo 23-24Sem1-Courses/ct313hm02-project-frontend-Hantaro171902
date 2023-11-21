@@ -1,12 +1,13 @@
 <script setup>
 import { ref, computed, onMounted, watch, watchEffect } from 'vue';
-import { useRouter } from 'vue-router';
+// import { useRouter } from 'vue-router';
 import drinksService from '@/services/drinks.service';
 import Pagination from '@/components/Pagination.vue';
 import InputSearch from '@/components/InputSearch.vue';
 import Navbar from '@/components/Navbar.vue';
+import Menu from '@/components/Menu.vue';
 
-const $router = useRouter();
+// const $router = useRouter();
 const totalPages = ref(1);
 const currentPage = ref(1);
 const drinks = ref([]);
@@ -34,21 +35,23 @@ const selectedDrink = computed(() => {
 
 async function retrieveDrinks(page) {
   try {
-    const chunk = await drinksService.getDrinks(page);
-    totalPages.value = chunk.metadata.lastPage ?? 1;
-    drinks.value = chunk.drinks.sort((current, next) =>
-      current.dr_name.localeCompare(next.dr_name)
-    );
+    const response = await drinksService.getDrinks(page);
+    const chunk = response?.drinks || []; // Use an empty array if drinks is undefined
+
+    console.log('API Response:', chunk); // Log the response to the console
+
+    totalPages.value = response?.metadata?.lastPage ?? 1;
+    drinks.value = chunk.sort((current, next) => current.dr_name.localeCompare(next.dr_name));
     selectedIndex.value = -1;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
 async function onDeleteDrinks() {
   if (confirm('Do you want to delete all drinks?')) {
     try {
-      await drinksService.deleteAllContacts();
+      await drinksService.deleteAllDrinks();
       totalPages.value = 1;
       currentPage.value = 1;
       drinks.value = [];
@@ -59,11 +62,13 @@ async function onDeleteDrinks() {
   }
 }
 
-function goToAddDrink() {
-  $router.push({ name: 'drink.add' });
-}
-
-onMounted(() => retrieveDrinks(1));
+// function goToAddDrink() {
+//   $router.push({ name: 'drink.add' });
+// }
+onMounted(() => {
+  retrieveDrinks(1);
+  console.log('Component Drinks:', drinks.value); // Log the component drinks array
+});
 
 watch(searchText, () => (selectedIndex.value = -1));
 
@@ -86,7 +91,7 @@ watchEffect(() => retrieveDrinks(currentPage.value));
         :drinks="filteredDrinks"
         v-model:selectedIndex="selectedIndex"
       />
-      <p v-else>Không có liên hệ nào.</p>
+      <p v-else>No drinks.</p>
       <div class="mt-3 d-flex justify-content-center align-items-center">
         <Pagination :totalPages="totalPages" v-model:currentPage="currentPage" />
       </div>
@@ -94,7 +99,7 @@ watchEffect(() => retrieveDrinks(currentPage.value));
         <button class="btn btn-sm btn-primary" @click="retrieveDrinks(currentPage)">
           <i class="fas fa-redo"></i> Làm mới
         </button>
-        <button class="btn btn-sm btn-success" @click="goToAddDrink">
+        <!-- <button class="btn btn-sm btn-success" @click="goToAddDrink">
           <i class="fas fa-plus"></i> Thêm mới
           <router-link
             :to="{
@@ -102,7 +107,7 @@ watchEffect(() => retrieveDrinks(currentPage.value));
             }"
           >
           </router-link>
-        </button>
+        </button> -->
         <button class="btn btn-sm btn-danger" @click="onDeleteDrinks">
           <i class="fas fa-trash"></i> Xóa tất cả
         </button>

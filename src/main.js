@@ -6,28 +6,16 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import App from './App.vue';
 import router from './router';
 import makeUsersService from './services/users.service';
-// import { Field, Form, configure, defineRule, localize } from 'vee-validate';
-
-// Import the rules you need
-// import { required, email } from '@vee-validate/rules';
-
-// Install the rules
-// defineRule('required', required);
-// defineRule('email', email);
+import makeDrinksService from './services/drinks.service';
 
 const app = createApp(App);
 // Provide the users service to the entire application
 const usersService = makeUsersService();
+const drinksService = makeDrinksService();
 
 // Provide the users service to the entire application
 app.config.globalProperties.$usersService = usersService;
+app.config.globalProperties.$drinksService = drinksService;
+
 app.use(router);
 app.mount('#app');
-
-// app.component('Form', Form);
-// app.component('Field', Field);
-
-// // Configure VeeValidate
-// configure({
-//   generateMessage: localize('en')
-// });
