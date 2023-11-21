@@ -51,4 +51,4 @@ function makeDrinksService() {
   };
 }
 
-export default makeDrinksService();
+export default makeDrinksService;

@@ -2,9 +2,6 @@
 <script setup>
 defineProps(['drinks', 'selectedIndex']);
 const $emit = defineEmits(['update:selectedIndex']);
-
-// Log the received drinks prop
-console.log('Received drinks:', drinks);
 </script>
 
 <template>

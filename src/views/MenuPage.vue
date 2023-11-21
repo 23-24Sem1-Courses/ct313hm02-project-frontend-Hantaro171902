@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, watch, watchEffect } from 'vue';
 // import { useRouter } from 'vue-router';
-import drinksService from '@/services/drinks.service';
+import makeDrinksService from '@/services/drinks.service';
 import Pagination from '@/components/Pagination.vue';
 import InputSearch from '@/components/InputSearch.vue';
 import Navbar from '@/components/Navbar.vue';
@@ -14,18 +14,22 @@ const drinks = ref([]);
 const selectedIndex = ref(-1);
 const searchText = ref('');
 
+const drinksService = makeDrinksService();
+
 const searchableDrinks = computed(() =>
   drinks.value.map((drink) => {
-    const { dr_img, dr_name, dr_price, cate_id } = drink;
-    return [dr_img, dr_name, dr_price, cate_id].join('');
+    const { dr_name, dr_price, dr_img, cate_id } = drink;
+    return [dr_name, dr_price, dr_img, cate_id].join('');
   })
 );
 
 const filteredDrinks = computed(() => {
   if (!searchText.value) return drinks.value;
-  return drinks.value.filter((drink, index) =>
+  const filtered = drinks.value.filter((drink, index) =>
     searchableDrinks.value[index].includes(searchText.value)
   );
+  console.log('Filtered Drinks:', filtered);
+  return filtered;
 });
 
 const selectedDrink = computed(() => {
@@ -34,17 +38,18 @@ const selectedDrink = computed(() => {
 });
 
 async function retrieveDrinks(page) {
+  console.log('Retrieving drinks...');
   try {
     const response = await drinksService.getDrinks(page);
-    const chunk = response?.drinks || []; // Use an empty array if drinks is undefined
+    const chunk = response?.drink || []; // Use an empty array if drinks is undefined
 
-    console.log('API Response:', chunk); // Log the response to the console
+    console.log('API Response:', response); // Log the response to the console
 
     totalPages.value = response?.metadata?.lastPage ?? 1;
     drinks.value = chunk.sort((current, next) => current.dr_name.localeCompare(next.dr_name));
     selectedIndex.value = -1;
   } catch (error) {
-    console.error(error);
+    console.error('Error:', error);
   }
 }
 
@@ -87,7 +92,7 @@ watchEffect(() => retrieveDrinks(currentPage.value));
         <InputSearch v-model="searchText" />
       </div>
       <Menu
-        v-if="filteredDrinks.length > 0"
+        v-if="drinks && drinks.length > 0"
         :drinks="filteredDrinks"
         v-model:selectedIndex="selectedIndex"
       />
@@ -120,14 +125,14 @@ watchEffect(() => retrieveDrinks(currentPage.value));
           <i class="fas fa-address-card"></i>
         </h4>
         <Menu :drink="selectedDrink" />
-        <router-link
+        <!-- <router-link
           :to="{
             name: 'drink.edit',
             params: { id: selectedDrink.id }
           }"
         >
           <span class="mt-2 badge badge-warning"> <i class="fas fa-edit"></i> Hiệu chỉnh</span>
-        </router-link>
+        </router-link> -->
       </div>
     </div>
   </div>
