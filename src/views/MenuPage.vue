@@ -18,8 +18,8 @@ const drinksService = makeDrinksService();
 
 const searchableDrinks = computed(() =>
   drinks.value.map((drink) => {
-    const { dr_name, dr_price, dr_img, cate_id } = drink;
-    return [dr_name, dr_price, dr_img, cate_id].join('');
+    const { dr_img, dr_name, dr_price, cate_id } = drink;
+    return [dr_img, dr_name, dr_price, cate_id].join('');
   })
 );
 
@@ -84,10 +84,7 @@ watchEffect(() => retrieveDrinks(currentPage.value));
   <Navbar />
   <div class="page row mb-5">
     <div class="mt-3 col-md-6">
-      <h4>
-        Menu
-        <i class="fas fa-address-book"></i>
-      </h4>
+      <h4>Menu</h4>
       <div class="my-3">
         <InputSearch v-model="searchText" />
       </div>

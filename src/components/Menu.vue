@@ -2,6 +2,11 @@
 <script setup>
 defineProps(['drinks', 'selectedIndex']);
 const $emit = defineEmits(['update:selectedIndex']);
+
+const getDrinkImage = async (imageName) => {
+  const module = await import(`@/assets/picture/products/${imageName}`);
+  return module.default;
+};
 </script>
 
 <template>
@@ -20,6 +25,9 @@ const $emit = defineEmits(['update:selectedIndex']);
 
     <!-- Move details block inside the loop -->
     <div v-if="selectedIndex !== -1">
+      <div class="p-1">
+        <img class="fluid-img" :src="getDrinkImage(drinks[selectedIndex].dr_img)" alt="" />
+      </div>
       <div class="p-1"><strong>Title:</strong> {{ drinks[selectedIndex].dr_name }}</div>
       <div class="p-1"><strong>Price:</strong> {{ drinks[selectedIndex].dr_price }}</div>
       <div class="p-1"><strong>Category:</strong> {{ drinks[selectedIndex].cate_name }}</div>
