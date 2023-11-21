@@ -29,8 +29,17 @@ const contactFormSchema = yup.object().shape({
 });
 
 const editedContact = ref({ ...props.initialContact });
-function signin() {
-  $emit('submit:user', editedContact.value);
+
+function submitSignin() {
+  $emit('submit:user', {
+    u_name: editedContact.value.username,
+    u_password: editedContact.value.password,
+    first_name: editedContact.value.firstname,
+    last_name: editedContact.value.lastname,
+    u_address: editedContact.value.address,
+    u_telephone: editedContact.value.telephone,
+    u_email: editedContact.value.email
+  });
 }
 // function deleteContact() {
 //   $emit('delete:contact', editedContact.value.id);
@@ -73,7 +82,7 @@ function signin() {
             <h2>Sign Up</h2>
             <p>We are happy to have you back.</p>
           </div>
-          <Form @submit="signin" :validation-schema="contactFormSchema">
+          <Form @submit="submitSignin" :validation-schema="contactFormSchema">
             <div class="input-group mb-3">
               <Field
                 name="u_name"
@@ -176,55 +185,10 @@ export default {
       lastname: '',
       address: '',
       telephone: '',
-      email: ''
+      email: '',
+
+      showSuccessMessage: false
     };
-  },
-  methods: {
-    async signgin() {
-      const credentials = {
-        u_name: this.username,
-        u_password: this.password,
-        first_name: this.firstname,
-        last_name: this.lastname,
-        u_address: this.address,
-        u_telephone: this.telephone,
-        u_email: this.email
-      };
-
-      try {
-        const response = await this.$usersService.signinUser(credentials);
-        console.log('Response from server:', response);
-
-        if (response.message === 'Sign up successful') {
-          // Handle successful login
-          console.log('Sign up successful!', response.user);
-
-          // Set showSuccessMessage to true
-          this.showSuccessMessage = true;
-
-          // Simulate a redirect after a short delay (e.g., 2 seconds)
-          setTimeout(() => {
-            // You can use router.push to navigate to another page
-            this.$router.push('/login');
-
-            // For now, I'll reset the form and hide the success message
-            this.username = '';
-            this.password = '';
-            this.firstname = '';
-            this.lastname = '';
-            this.address = '';
-            this.telephone = '';
-            this.email = '';
-            this.showSuccessMessage = false;
-          }, 1000);
-        } else {
-          // Handle login error
-          console.error('Sign in failed', response.message);
-        }
-      } catch (error) {
-        console.error('Error during sign in:', error);
-      }
-    }
   }
 };
 </script>

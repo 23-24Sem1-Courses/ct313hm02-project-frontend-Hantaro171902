@@ -6,7 +6,7 @@ import Menu from '@/views/MenuPage.vue';
 import AboutUs from '@/views/AboutUs.vue';
 // import Cart from '../views/Cart.vue';
 const routes = [
-  { path: '/', name: Home, component: Home },
+  { path: '/', name: 'Home', component: Home },
 
   {
     path: '/:pathMatch(.*)*',

@@ -12,11 +12,11 @@ function makeUsersService() {
     }).then((res) => res.json());
   }
 
-  async function signinUser(user) {
-    return await fetch('/api/users/', {
+  async function signinUser(credentials) {
+    return await fetch('/api/users', {
       method: 'POST',
       headers,
-      body: JSON.stringify(user)
+      body: JSON.stringify(credentials)
     }).then((res) => res.json());
   }
 
