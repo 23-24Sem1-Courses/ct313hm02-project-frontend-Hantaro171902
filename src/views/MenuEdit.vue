@@ -3,19 +3,21 @@ import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import Menu from '@/components/Menu.vue';
 import makeDrinksService from '@/services/drinks.service';
+
 const props = defineProps({
-  contactId: { type: String, required: true }
+  drinkId: { type: String, required: true }
 });
+
 const $router = useRouter();
 const $route = useRoute();
-const contact = ref(null);
+const drink = ref(null);
 const message = ref('');
 
 const drinksService = makeDrinksService();
 
 async function getDrink(id) {
   try {
-    contact.value = await drinksService.getDrink(id);
+    drink.value = await drinksService.getDrink(id);
   } catch (error) {
     console.log(error);
     // Redirect to NotFound page and keep URL intact
@@ -29,7 +31,7 @@ async function getDrink(id) {
 }
 async function onUpdateDrink(editedDrink) {
   try {
-    await drinksService.updateContact(editedDrink.id, editedDrink);
+    await drinksService.updateDrink(editedDrink.id, editedDrink);
     message.value = 'Update successfully !';
   } catch (error) {
     console.log(error);
@@ -39,21 +41,23 @@ async function onDeleteDrink(id) {
   if (confirm('Do you want to delete this product?')) {
     try {
       await drinksService.deleteDrink(id);
-      $router.push({ name: 'contactbook' });
+      $router.push({ name: 'menupage' });
     } catch (error) {
       console.log(error);
     }
   }
 }
-getDrink(props.contactId);
+
+getDrink(props.drinkId);
 </script>
+
 <template>
-  <div v-if="contact" class="page">
+  <div v-if="drink" class="page">
     <h4>Edit drink</h4>
     <Menu
-      :initial-contact="contact"
-      @submit:contact="onUpdateDrink"
-      @delete:contact="onDeleteDrink"
+      :initial-drink="drink"
+      @submit:drink="onUpdateDrink"
+      @delete:drink="onDeleteDrink"
     />
     <p>{{ message }}</p>
   </div>

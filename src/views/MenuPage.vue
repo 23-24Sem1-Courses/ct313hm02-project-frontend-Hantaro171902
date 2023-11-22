@@ -130,7 +130,8 @@ watchEffect(() => retrieveDrinks(currentPage.value));
             params: { id: selectedDrink.id }
           }"
         >
-          <span class="mt-2 badge badge-warning"> <i class="fas fa-edit"></i> Update</span>
+          <span class="mt-2 badge badge-warning"> 
+          <i class="fas fa-edit"></i> Update</span>
         </router-link>
       </div>
     </div>

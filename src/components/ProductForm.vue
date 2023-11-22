@@ -6,7 +6,7 @@ import { Form, Field, ErrorMessage } from 'vee-validate';
 // const drinksService = makeDrinksService();
 
 const props = defineProps({
-  initialContact: { type: Object, required: true }
+  initialDrink: { type: Object, required: true }
 });
 
 const $emit = defineEmits(['submit:drink', 'delete:drink']);
