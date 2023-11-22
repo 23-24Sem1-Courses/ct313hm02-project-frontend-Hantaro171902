@@ -5,12 +5,12 @@
         ><img class="navbar-brand ms-3" src="@/assets/picture/White_logo800.png" alt="Logo"
       /></router-link>
 
-      <form class="d-flex" role="search">
+      <!-- <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
         <button class="btn btn-outline" type="submit">
           <i class="fa fa-search" aria-hidden="true"></i>
         </button>
-      </form>
+      </form> -->
 
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
