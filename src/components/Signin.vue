@@ -76,7 +76,7 @@ function submitSignin() {
         <div class="row align-items-center">
           <div v-if="showSuccessMessage" class="success-message mb-4">
             <!-- Show success message -->
-            <p>Login successful! Redirecting...</p>
+            <p>Sign up successful! Redirecting...</p>
           </div>
           <div v-else class="header-text mb-4 text-white">
             <h2>Sign Up</h2>
