@@ -1,13 +1,13 @@
 <script setup>
 import { ref, computed, onMounted, watch, watchEffect } from 'vue';
-// import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import makeDrinksService from '@/services/drinks.service';
 import Pagination from '@/components/Pagination.vue';
 import InputSearch from '@/components/InputSearch.vue';
 import Navbar from '@/components/Navbar.vue';
 import Menu from '@/components/Menu.vue';
 
-// const $router = useRouter();
+const $router = useRouter();
 const totalPages = ref(1);
 const currentPage = ref(1);
 const drinks = ref([]);
@@ -67,9 +67,11 @@ async function onDeleteDrinks() {
   }
 }
 
-// function goToAddDrink() {
-//   $router.push({ name: 'drink.add' });
-// }
+// Add drink function
+function goToAddDrink() {
+  $router.push({ name: 'menuadd' });
+}
+
 onMounted(() => {
   retrieveDrinks(1);
   console.log('Component Drinks:', drinks.value); // Log the component drinks array
@@ -99,19 +101,19 @@ watchEffect(() => retrieveDrinks(currentPage.value));
       </div>
       <div class="mt-3 row justify-content-around align-items-center">
         <button class="btn btn-sm btn-primary" @click="retrieveDrinks(currentPage)">
-          <i class="fas fa-redo"></i> Làm mới
+          <i class="fas fa-redo"></i> Reload
         </button>
-        <!-- <button class="btn btn-sm btn-success" @click="goToAddDrink">
-          <i class="fas fa-plus"></i> Thêm mới
+        <button class="btn btn-sm btn-success" @click="goToAddDrink">
+          <i class="fas fa-plus"></i> Add new
           <router-link
             :to="{
-              name: 'drink.add'
+              name: 'menuadd'
             }"
           >
           </router-link>
-        </button> -->
+        </button>
         <button class="btn btn-sm btn-danger" @click="onDeleteDrinks">
-          <i class="fas fa-trash"></i> Xóa tất cả
+          <i class="fas fa-trash"></i> Delete All
         </button>
       </div>
     </div>
@@ -122,14 +124,14 @@ watchEffect(() => retrieveDrinks(currentPage.value));
           <i class="fas fa-address-card"></i>
         </h4>
         <Menu :drink="selectedDrink" />
-        <!-- <router-link
+        <router-link
           :to="{
-            name: 'drink.edit',
+            name: 'menuedit',
             params: { id: selectedDrink.id }
           }"
         >
-          <span class="mt-2 badge badge-warning"> <i class="fas fa-edit"></i> Hiệu chỉnh</span>
-        </router-link> -->
+          <span class="mt-2 badge badge-warning"> <i class="fas fa-edit"></i> Update</span>
+        </router-link>
       </div>
     </div>
   </div>

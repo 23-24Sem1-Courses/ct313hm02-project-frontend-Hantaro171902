@@ -13,9 +13,9 @@ const message = ref('');
 
 const drinksService = makeDrinksService();
 
-async function getContact(id) {
+async function getDrink(id) {
   try {
-    contact.value = await drinksService.getContact(id);
+    contact.value = await drinksService.getDrink(id);
   } catch (error) {
     console.log(error);
     // Redirect to NotFound page and keep URL intact
@@ -30,30 +30,30 @@ async function getContact(id) {
 async function onUpdateDrink(editedDrink) {
   try {
     await drinksService.updateContact(editedDrink.id, editedDrink);
-    message.value = 'Liên hệ được cập nhật thành công.';
+    message.value = 'Update successfully !';
   } catch (error) {
     console.log(error);
   }
 }
-async function onDeleteContact(id) {
-  if (confirm('Bạn muốn xóa Liên hệ này?')) {
+async function onDeleteDrink(id) {
+  if (confirm('Do you want to delete this product?')) {
     try {
-      await drinksService.deleteContact(id);
+      await drinksService.deleteDrink(id);
       $router.push({ name: 'contactbook' });
     } catch (error) {
       console.log(error);
     }
   }
 }
-getContact(props.contactId);
+getDrink(props.contactId);
 </script>
 <template>
   <div v-if="contact" class="page">
-    <h4>Hiệu chỉnh Liên hệ</h4>
+    <h4>Edit drink</h4>
     <Menu
       :initial-contact="contact"
       @submit:contact="onUpdateDrink"
-      @delete:contact="onDeleteContact"
+      @delete:contact="onDeleteDrink"
     />
     <p>{{ message }}</p>
   </div>
