@@ -149,7 +149,7 @@ import Navbar from '@/components/Navbar.vue';
             </div>
             <div class="link w">
               <a href="https://www.highlandscoffee.com.vn/vn/dich-vu.html"
-                ><span>Xem chi tiết</span></a
+                ><span>Xem chi tiết.</span></a
               >
             </div>
           </div>
