@@ -13,7 +13,7 @@ const getDrinkImage = (imageName) => {
 </script>
 
 <template>
-  <div>
+  <div class="container">
     <ul class="list-group">
       <li
         class="list-group-item px-3"
@@ -29,7 +29,7 @@ const getDrinkImage = (imageName) => {
     <!-- Move details block inside the loop -->
     <div v-if="selectedIndex !== -1">
       <div class="p-1">
-        <img class="fluid-img" :src="getDrinkImage(drinks[selectedIndex].dr_img)" alt="" />
+        <img class="img-fuild" :src="getDrinkImage(drinks[selectedIndex].dr_img)" alt="" />
       </div>
       <div class="p-1"><strong>Title:</strong> {{ drinks[selectedIndex].dr_name }}</div>
       <div class="p-1"><strong>Price:</strong> {{ drinks[selectedIndex].dr_price }}</div>
@@ -37,3 +37,10 @@ const getDrinkImage = (imageName) => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+</style>
