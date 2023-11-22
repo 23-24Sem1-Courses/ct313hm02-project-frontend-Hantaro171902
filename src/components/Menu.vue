@@ -119,4 +119,13 @@ const getDrinkImage = (imageName) => {
 .navigation-buttons button {
   margin-right: 10px;
 }
+.infor_drink {
+  position: fixed;
+  right: 400px;
+  top: 150px;
+}
+.infor_drink img {
+  width: 200px;
+  height: 200px;
+}
 </style>

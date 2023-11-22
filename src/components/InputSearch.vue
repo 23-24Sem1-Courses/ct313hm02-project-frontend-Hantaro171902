@@ -22,3 +22,8 @@ const $emit = defineEmits(['submit', 'update:modelValue']);
     </div>
   </div>
 </template>
+<style>
+.input-group{
+  padding-left: 50px;
+}
+</style>
