@@ -41,13 +41,19 @@ function makeDrinksService() {
     }).then((res) => res.json());
   }
 
+  async function getCategories() {
+    const categoriesUrl = '/api/categories'; // Adjust the URL based on your API
+    return await fetch(categoriesUrl).then((res) => res.json());
+  }
+
   return {
     getDrinks,
     deleteAllDrinks,
     getDrink,
     createDrink,
     updateDrink,
-    deleteDrink
+    deleteDrink,
+    getCategories
   };
 }
 
