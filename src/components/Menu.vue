@@ -47,7 +47,7 @@ const getDrinkImage = (imageName) => {
             alt=""
           />
         </div>
-        <div class="card-title"><strong>Title:</strong> {{ drinks[selectedIndex].dr_name }}</div>
+        <div class="card-title"><strong>Title:</strong> {{ drinks[selectedIndex].dr_name }}.</div>
         <div class="card-text"><strong>Price:</strong> {{ drinks[selectedIndex].dr_price }}</div>
         <div class="card-text">
           <strong>Category:</strong> {{ drinks[selectedIndex].cate_name }}
@@ -95,16 +95,18 @@ const getDrinkImage = (imageName) => {
 .active-filter {
   font-weight: bold;
 }
-
 .drink-cards {
-  display: flex;
+  /* display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-around; */
+  position: fixed;
+  right: 300px;
+  top: 160px;
 }
 
 .drink-img {
-  width: 100px;
-  height: 100px;
+  width: 130px;
+  height: 130px;
 }
 
 .card {
