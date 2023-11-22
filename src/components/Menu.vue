@@ -2,10 +2,13 @@
 <script setup>
 defineProps(['drinks', 'selectedIndex']);
 const $emit = defineEmits(['update:selectedIndex']);
+const getDrinkImage = (imageName) => {
+  // Construct the path to the image
+  const imagePath = `src/assets/picture/products/${imageName}`;
+  console.log('Image Path:', imagePath);
 
-const getDrinkImage = async (imageName) => {
-  const module = await import(`@/assets/picture/products/${imageName}`);
-  return module.default;
+  // Return the image path
+  return imagePath;
 };
 </script>
 
