@@ -6,6 +6,7 @@ import Pagination from '@/components/Pagination.vue';
 import InputSearch from '@/components/InputSearch.vue';
 import Navbar from '@/components/Navbar.vue';
 import Menu from '@/components/Menu.vue';
+// import ProductForm from '@/components/ProductForm.vue';
 
 const $router = useRouter();
 const totalPages = ref(1);
@@ -120,7 +121,7 @@ watchEffect(() => retrieveDrinks(currentPage.value));
     <div class="mt-3 col-md-6">
       <div v-if="selectedDrink">
         <h4>
-          Chi tiết Liên hệ
+          Details
           <i class="fas fa-address-card"></i>
         </h4>
         <Menu :drink="selectedDrink" />
@@ -130,8 +131,7 @@ watchEffect(() => retrieveDrinks(currentPage.value));
             params: { id: selectedDrink.id }
           }"
         >
-          <span class="mt-2 badge badge-warning"> 
-          <i class="fas fa-edit"></i> Update</span>
+          <span class="mt-2 badge badge-warning"> <i class="fas fa-edit"></i> Update</span>
         </router-link>
       </div>
     </div>

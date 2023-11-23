@@ -35,9 +35,9 @@ function submitDrink() {
   });
 }
 
-// function deleteDrink() {
-//   $emit('delete:drink', editedDrink.value.id);
-// }
+function deleteDrink() {
+  $emit('delete:drink', editedDrink.value.id);
+}
 </script>
 
 <template>
@@ -52,17 +52,6 @@ function submitDrink() {
         <div class="featured-image mb-3">
           <img src="@/assets/picture/Highland_Newlogo.png" class="img-fluid" />
         </div>
-        <!-- <p
-          class="text-white fs-2"
-          style="font-family: 'Courier New', Courier, monospace; font-weight: 600"
-        >
-    
-        </p>
-        <small
-          class="text-white text-wrap text-center"
-          style="width: 17rem; font-family: 'Courier New', Courier, monospace"
-          >Join experienced Designers on this platform.</small
-        > -->
       </div>
       <!-------------------- ------ Right Box ---------------------------->
 
@@ -73,8 +62,7 @@ function submitDrink() {
             <p>Add drink successful! Redirecting...</p>
           </div>
           <div v-else class="header-text mb-4 text-white">
-            <h2>Sign Up</h2>
-            <p>We are happy to have you back.</p>
+            <h2>Add Product</h2>
           </div>
           <Form @submit="submitDrink" :validation-schema="drinkFormSchema">
             <div class="input-group mb-3">
@@ -119,6 +107,17 @@ function submitDrink() {
             </div>
             <div class="input-group mb-3">
               <button type="submit" class="btn btn-lg btn-primary w-100 fs-6">Add</button>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary">Save</button>
+              <button
+                v-if="editedDrink.id"
+                type="button"
+                class="ml-2 btn btn-danger"
+                @click="deleteDrink"
+              >
+                Delete
+              </button>
             </div>
           </Form>
         </div>

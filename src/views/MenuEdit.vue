@@ -41,7 +41,7 @@ async function onDeleteDrink(id) {
   if (confirm('Do you want to delete this product?')) {
     try {
       await drinksService.deleteDrink(id);
-      $router.push({ name: 'menupage' });
+      $router.push({ name: 'menu' });
     } catch (error) {
       console.log(error);
     }
@@ -54,11 +54,7 @@ getDrink(props.drinkId);
 <template>
   <div v-if="drink" class="page">
     <h4>Edit drink</h4>
-    <Menu
-      :initial-drink="drink"
-      @submit:drink="onUpdateDrink"
-      @delete:drink="onDeleteDrink"
-    />
+    <Menu :initial-drink="drink" @submit:drink="onUpdateDrink" @delete:drink="onDeleteDrink" />
     <p>{{ message }}</p>
   </div>
 </template>

@@ -10,7 +10,7 @@
         <div class="featured-image mb-3">
           <img src="@/assets/picture/White_logo800.png" class="img-fluid" />
         </div>
-        <p
+        <!-- <p
           class="text-white fs-2"
           style="font-family: 'Courier New', Courier, monospace; font-weight: 600"
         >
@@ -20,7 +20,7 @@
           class="text-white text-wrap text-center"
           style="width: 17rem; font-family: 'Courier New', Courier, monospace"
           >Join experienced Designers on this platform.</small
-        >
+        > -->
       </div>
       <!-------------------- ------ Right Box ---------------------------->
 
@@ -31,7 +31,7 @@
             <p>Login successful! Redirecting...</p>
           </div>
           <div v-else class="header-text mb-4">
-            <h2>Hello,Again</h2>
+            <h2>LOGIN</h2>
             <p>We are happy to have you back.</p>
           </div>
           <form @submit.prevent="login">
@@ -71,7 +71,7 @@
               </button>
             </div>
             <div class="row">
-              <small>Don't have account? <a href="#">Sign Up</a></small>
+              <small>Don't have account? <router-link to="/signin"> Sign Up</router-link></small>
             </div>
           </form>
         </div>

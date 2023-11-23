@@ -4,7 +4,7 @@ import Login from '@/views/LoginPage.vue';
 import Signin from '@/views/SigninPage.vue';
 import Menu from '@/views/MenuPage.vue';
 import AboutUs from '@/views/AboutUs.vue';
-// import MenuEdit from '@/views/MenuEdit.vue';
+import MenuEdit from '@/views/MenuEdit.vue';
 import MenuAdd from '@/views/MenuAdd.vue';
 
 // import Cart from '../views/Cart.vue';
@@ -44,9 +44,8 @@ const routes = [
   {
     path: '/menuedit/:id',
     name: 'menuedit',
-    component: () =>
-      import ('@/views/MenuEdit.vue'),
-    props: (route) => ({drinkId: route.params.id})
+    component: MenuEdit,
+    props: (route) => ({ drinkId: route.params.id })
   },
 
   {
