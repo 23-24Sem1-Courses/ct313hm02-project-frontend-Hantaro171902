@@ -119,7 +119,7 @@ watchEffect(() => retrieveDrinks(currentPage.value));
       </div>
     </div>
     <div class="mt-3 col-md-6">
-      <div v-if="selectedDrink">
+      <div v-if="selectedDrink !== null && selectedDrink !== undefined">
         <h4>
           Details
           <i class="fas fa-address-card"></i>
@@ -131,7 +131,7 @@ watchEffect(() => retrieveDrinks(currentPage.value));
             params: { id: selectedDrink.id }
           }"
         >
-          <span class="mt-2 badge badge-warning"> <i class="fas fa-edit"></i> Update</span>
+          <span class="mt-2 badge badge-warning"> <i class="fas fa-edit"></i>Update</span>
         </router-link>
       </div>
     </div>

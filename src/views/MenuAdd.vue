@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <ProductForm :initial-drink="drink" @submit:drink="onAdd" />
+    <ProductAdd :initial-drink="drink" @submit:drink="onAdd" />
     <p>{{ message }}</p>
   </div>
 </template>
@@ -8,7 +8,7 @@
 <script setup>
 import { ref } from 'vue';
 
-import ProductForm from '@/components/ProductForm.vue';
+import ProductAdd from '@/components/ProductAdd.vue';
 import makeDrinksService from '@/services/drinks.service';
 import { useRouter } from 'vue-router';
 

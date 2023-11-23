@@ -1,13 +1,13 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, defineProps, defineEmits } from 'vue';
 import * as yup from 'yup';
 import { Form, Field, ErrorMessage } from 'vee-validate';
-
-// const drinksService = makeDrinksService();
 
 const props = defineProps({
   initialDrink: { type: Object, required: true }
 });
+
+const images = ref([]); // Add this line to define the 'images' array
 
 const $emit = defineEmits(['submit:drink', 'delete:drink']);
 
@@ -16,29 +16,55 @@ const showSuccessMessage = ref(false);
 const drinkFormSchema = yup.object().shape({
   dr_name: yup
     .string()
-    .required('Tên phải có giá trị.')
-    .min(2, 'Tên phải ít nhất 2 ký tự.')
-    .max(50, 'Tên có nhiều nhất 50 ký tự.'),
-  dr_price: yup.string().min(5, 'Số tiền phải lớn hơn 1000'),
-  dr_img: yup.string().required('Vui lòng chọn Ảnh'),
-  cate_id: yup.string().required('Vui lòng chọn loại sản phẩm')
+    .required('Title require.')
+    .min(2, 'At least 2 characters.')
+    .max(50, 'Maximum 50 characters.'),
+  dr_price: yup.string().min(5, 'At least 5 characters.'),
+  dr_img: yup.string().required('Please choose an image.'),
+  cate_id: yup.string().required('Please choose category.')
 });
 
 const editedDrink = ref({ ...props.initialDrink });
 
-function submitDrink() {
+const submitDrink = () => {
+  console.log('Submitting drink:', editedDrink.value);
+
   $emit('submit:drink', {
     dr_name: editedDrink.value.drinkname,
     dr_price: editedDrink.value.price,
     dr_img: editedDrink.value.image,
     cate_id: editedDrink.value.category
   });
-}
+};
 
-function deleteDrink() {
-  $emit('delete:drink', editedDrink.value.id);
-}
+// const deleteDrink = () => {
+//   $emit('delete:drink', editedDrink.value.id);
+// };
+
+const selectFiles = () => {
+  console.log('Selecting files');
+  this.$refs.fileInput.click();
+};
+
+const onFileSelect = (event) => {
+  console.log('File selected:', event.target.files);
+
+  const files = event.target.files;
+  if (files.length === 0) return;
+  for (let i = 0; i < files.length; i++) {
+    if (files[i].type.split('/')[0] !== 'image') continue;
+    console.log('Adding image:', files[i].name);
+
+    if (images.value.some((e) => e.name === files[i].name)) {
+      images.value.push({ name: files[i].name, url: URL.createObjectURL(files[i]) });
+      // Update the editedDrink's dr_img field
+      editedDrink.value.dr_img = files[i].name;
+    }
+  }
+};
 </script>
+
+<!-- Rest of your template and styles -->
 
 <template>
   <div class="container d-flex justify-content-center align-items-center min-vh-100">
@@ -49,8 +75,24 @@ function deleteDrink() {
         class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
         style="background: white"
       >
-        <div class="featured-image mb-3">
-          <img src="@/assets/picture/Highland_Newlogo.png" class="img-fluid" />
+        <div class="card">
+          <img src="..." class="card-img-top" alt="" />
+          <div class="card-body">
+            <span v-if="!isDragging"
+              >Drag & Drop image here or
+              <span class="select" role="button" @click="selectFiles">Choose</span>
+            </span>
+            <div v-else class="select">Drop image here</div>
+            <input name="dr_img" type="file" class="file" ref="fileInput" @change="onFileSelect" />
+            <!-- <p class="card-text">Add image here</p>
+            <button class="btn btn-primary bottom-0 end-0">Upload</button> -->
+          </div>
+          <div class="card-footer">
+            <div class="card-img" v-for="(image, index) in images" :key="index">
+              <span class="delete" role="button" @click="deleteImage(index)">x</span>
+              <img :src="image.url" alt="" />
+            </div>
+          </div>
         </div>
       </div>
       <!-------------------- ------ Right Box ---------------------------->
@@ -108,17 +150,17 @@ function deleteDrink() {
             <div class="input-group mb-3">
               <button type="submit" class="btn btn-lg btn-primary w-100 fs-6">Add</button>
             </div>
-            <div class="form-group">
+            <!-- <div class="input-group">
               <button class="btn btn-primary">Save</button>
               <button
                 v-if="editedDrink.id"
                 type="button"
-                class="ml-2 btn btn-danger"
+                class="btn btn-danger"
                 @click="deleteDrink"
               >
-                Delete
+                Xóa
               </button>
-            </div>
+            </div> -->
           </Form>
         </div>
       </div>
@@ -132,11 +174,26 @@ export default {
     return {
       drinkname: '',
       price: '',
-      image: '',
+      image: [],
       category: '',
       showSuccessMessage: false
     };
   }
+  // methods: {
+  //   selectFiles() {
+  //     this.$refs.fileInput.click();
+  //   },
+  //   onFileSelect(event) {
+  //     const files = event.target.files;
+  //     if (files.length === 0) return;
+  //     for (let i = 0; i < files.length; i++) {
+  //       if (files[i].type.split('/')[0] !== 'image') continue;
+  //       if (this.images.some((e) => e.name === files[i].name)) {
+  //         this.images.push({ name: files[i].name, url: URL.createObjectURL(files[i]) });
+  //       }
+  //     }
+  //   }
+  // }
 };
 </script>
 
@@ -154,6 +211,31 @@ export default {
 
 .right-box {
   padding: 40px 30px 40px 40px;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.card .top {
+  text-align: center;
+}
+
+.card-body {
+  height: 100%;
+  border-radius: 10px;
+  border: 2px dashed #343442;
+  align-items: center;
+  user-select: center;
+  -webkit-user-select: center;
+  background-color: #f5f5f5;
 }
 
 /*------------ Custom Placeholder ------------*/

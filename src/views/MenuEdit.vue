@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import Menu from '@/components/Menu.vue';
 import makeDrinksService from '@/services/drinks.service';
+import ProductAdd from '@/components/ProductAdd.vue';
 
 const props = defineProps({
   drinkId: { type: String, required: true }
@@ -54,7 +54,11 @@ getDrink(props.drinkId);
 <template>
   <div v-if="drink" class="page">
     <h4>Edit drink</h4>
-    <Menu :initial-drink="drink" @submit:drink="onUpdateDrink" @delete:drink="onDeleteDrink" />
+    <ProductAdd
+      :initial-drink="drink"
+      @submit:drink="onUpdateDrink"
+      @delete:drink="onDeleteDrink"
+    />
     <p>{{ message }}</p>
   </div>
 </template>
